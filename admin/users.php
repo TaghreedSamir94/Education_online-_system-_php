@@ -36,7 +36,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-graduation-cap"></i></i> <span>Education Admin</span></a>
+              <a href="../index.php" class="site_title"><i class="fa fa-graduation-cap"></i></i> <span>Education Admin</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -62,20 +62,20 @@
 							<ul class="nav side-menu">
 								<li><a><i class="fa fa-users"></i> Users <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="users.html">Users List</a></li>
-										<li><a href="addUser.html">Add User</a></li>
+										<li><a href="./users.php">Users List</a></li>
+										<li><a href="./addUser.php">Add User</a></li>
 									</ul>
 								</li>
 								<li><a><i class="fa fa-edit"></i> Categories <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="addCategory.html">Add Category</a></li>
-										<li><a href="categories.html">Categories List</a></li>
+										<li><a href="./addCategory.php">Add Category</a></li>
+										<li><a href="./categories.php">Categories List</a></li>
 									</ul>
 								</li>
 								<li><a><i class="fa fa-desktop"></i> Meetings <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="addMeeting.html">Add Meeting</a></li>
-										<li><a href="meetings.html">Meetings List</a></li>
+										<li><a href="./addMeeting.php">Add Meeting</a></li>
+										<li><a href="./meetings.php">Meetings List</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -95,7 +95,7 @@
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.php">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>
@@ -122,7 +122,7 @@
                           <span>Settings</span>
                         </a>
                     <a class="dropdown-item"  href="javascript:;">Help</a>
-                      <a class="dropdown-item"  href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                      <a class="dropdown-item"  href="login.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                     </div>
                   </li>
   
@@ -262,7 +262,7 @@
                           <td>tony2023</td>
                           <td>tony@gmail.com</td>
                           <td>Yes</td>
-                          <td><img src="./images/edit.png" alt="Edit"></td>
+                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
                         </tr>
                         <tr>
                           <td>1 Jan 2023</td>
@@ -270,7 +270,7 @@
                           <td>tony2023</td>
                           <td>tony@gmail.com</td>
                           <td>Yes</td>
-                          <td><img src="./images/edit.png" alt="Edit"></td>
+                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
                         </tr>
                         <tr>
                           <td>1 Jan 2023</td>
@@ -278,7 +278,7 @@
                           <td>tony2023</td>
                           <td>tony@gmail.com</td>
                           <td>Yes</td>
-                          <td><img src="./images/edit.png" alt="Edit"></td>
+                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
                         </tr>
                         <tr>
                           <td>1 Jan 2023</td>
@@ -286,7 +286,7 @@
                           <td>tony2023</td>
                           <td>tony@gmail.com</td>
                           <td>Yes</td>
-                          <td><img src="./images/edit.png" alt="Edit"></td>
+                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
                         </tr>
                         <tr>
                           <td>1 Jan 2023</td>
@@ -294,7 +294,7 @@
                           <td>tony2023</td>
                           <td>tony@gmail.com</td>
                           <td>Yes</td>
-                          <td><img src="./images/edit.png" alt="Edit"></td>
+                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
                         </tr>
                         <tr>
                           <td>1 Jan 2023</td>
@@ -302,7 +302,7 @@
                           <td>tony2023</td>
                           <td>tony@gmail.com</td>
                           <td>Yes</td>
-                          <td><img src="./images/edit.png" alt="Edit"></td>
+                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
                         </tr>
                         <tr>
                           <td>1 Jan 2023</td>
@@ -310,7 +310,7 @@
                           <td>tony2023</td>
                           <td>tony@gmail.com</td>
                           <td>Yes</td>
-                          <td><img src="./images/edit.png" alt="Edit"></td>
+                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
                         </tr>
                         <tr>
                           <td>1 Jan 2023</td>
@@ -318,7 +318,7 @@
                           <td>tony2023</td>
                           <td>tony@gmail.com</td>
                           <td>Yes</td>
-                          <td><img src="./images/edit.png" alt="Edit"></td>
+                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
                         </tr>
                         <tr>
                           <td>1 Jan 2023</td>
@@ -326,7 +326,7 @@
                           <td>tony2023</td>
                           <td>tony@gmail.com</td>
                           <td>Yes</td>
-                          <td><img src="./images/edit.png" alt="Edit"></td>
+                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
                         </tr>
                         <tr>
                           <td>1 Jan 2023</td>
@@ -334,7 +334,7 @@
                           <td>tony2023</td>
                           <td>tony@gmail.com</td>
                           <td>Yes</td>
-                          <td><img src="./images/edit.png" alt="Edit"></td>
+                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
                         </tr>
                         
                       </tbody>
