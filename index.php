@@ -1,3 +1,6 @@
+<?php session_start();  ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,28 +64,41 @@ https://templatemo.com/tm-569-edu-meeting
               <div class="col-12">
                   <nav class="main-nav">
                       <!-- ***** Logo Start ***** -->
-                      <a href="index.html" class="logo">
+                      <a href="index.php" class="logo">
                           Edu Meeting
                       </a>
                       <!-- ***** Logo End ***** -->
                       <!-- ***** Menu Start ***** -->
-                      <ul class="nav">
+                     <?php if(!isset($_SESSION['user_name'])): ?>
+                     <ul class="nav">
                           <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                          <li><a href="meetings.html">Meetings</a></li>
                           <li class="scroll-to-section"><a href="#apply">Apply Now</a></li>
+                          <li><a href="./login_std.php">Meetings</a></li>
+                          <li class="scroll-to-section"><a href="#courses">Courses</a></li> 
+                          <li class="scroll-to-section"><a href="#contact">Contact Us</a></li> 
+                     </ul>        
+                     <a class='menu-trigger'>
+                          <span>Menu</span>
+                     </a>
+                     <?php else: ?>
+                     <ul class="nav">
+                          <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
+                          <li><a href="meetings.php">Meetings</a></li>
                           <li class="has-sub">
                               <a href="javascript:void(0)">Pages</a>
                               <ul class="sub-menu">
-                                  <li><a href="meetings.html">Upcoming Meetings</a></li>
-                                  <li><a href="meeting-details.html">Meeting Details</a></li>
+                                  <li><a href="meetings.php">Upcoming Meetings</a></li>
+                                  <li><a href="meeting-details.php">Meeting Details</a></li>
                               </ul>
                           </li>
                           <li class="scroll-to-section"><a href="#courses">Courses</a></li> 
-                          <li class="scroll-to-section"><a href="#contact">Contact Us</a></li> 
-                      </ul>        
-                      <a class='menu-trigger'>
+                          <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
+                          <li ><a href="./logout.php">Log out</a></li> 
+                     </ul>        
+                     <a class='menu-trigger'>
                           <span>Menu</span>
-                      </a>
+                     </a>
+                     <?php endif;?>
                       <!-- ***** Menu End ***** -->
                   </nav>
               </div>
@@ -102,13 +118,18 @@ https://templatemo.com/tm-569-edu-meeting
             <div class="row">
               <div class="col-lg-12">
                 <div class="caption">
-              <h6>Hello Students</h6>
-              <h2>Welcome to Education</h2>
-              <p>This is an edu meeting HTML CSS template provided by <a rel="nofollow" href="https://templatemo.com/page/1" target="_blank">TemplateMo website</a>. This is a Bootstrap v5.1.3 layout. The video background is taken from Pexels website, a group of young people by <a rel="nofollow" href="https://www.pexels.com/@pressmaster" target="_blank">Pressmaster</a>.</p>
-              <div class="main-button-red">
-                  <div class="scroll-to-section"><a href="#contact">Join Us Now!</a></div>
+                  <?php if(!isset($_SESSION['user_name'])): ?>
+                  <h6>Hello Students</h6>
+                  <h2>Welcome to Education</h2>
+                  <p>This is an edu meeting HTML CSS template provided by <a rel="nofollow" href="https://templatemo.com/page/1" target="_blank">TemplateMo website</a>. This is a Bootstrap v5.1.3 layout. The video background is taken from Pexels website, a group of young people by <a rel="nofollow" href="https://www.pexels.com/@pressmaster" target="_blank">Pressmaster</a>.</p>
+                  <div class="main-button-red">
+                  <div ><a href="./login_std.php">Join Us Now!</a></div>
+                  </div>
+                  <?php else: ?>
+                  <h6>Hello <?php echo $_SESSION['user_name'] ?></h6>
+                  <h2>Welcome to Education</h2>
+                  <?php endif;?>
               </div>
-          </div>
               </div>
             </div>
           </div>
@@ -189,50 +210,91 @@ https://templatemo.com/tm-569-edu-meeting
         <div class="col-lg-4">
           <div class="categories">
             <h4>Meeting Catgories</h4>
-            <ul>
-              <li><a href="#">Sed tempus enim leo</a></li>
-              <li><a href="#">Aenean molestie quis</a></li>
-              <li><a href="#">Cras et metus vestibulum</a></li>
-              <li><a href="#">Nam et condimentum</a></li>
-              <li><a href="#">Phasellus nec sapien</a></li>
-            </ul>
+            <?php 
+            include('./admin/db.php');
+            $std = $dsn->prepare("SELECT * FROM `categories`" );
+            $std->execute();
+            $data = $std->fetchAll();
+            foreach($data as $row){
+              echo "
+              <ul>
+               <li><a href='#'>{$row["category_name"]}</a></li>
+             
+              </ul>";}
+            ?>
             <div class="main-button-red">
-              <a href="meetings.html">All Upcoming Meetings</a>
+              <a href="meetings.php">All Upcoming Meetings</a>
             </div>
           </div>
         </div>
+       
         <div class="col-lg-8">
+          
           <div class="row">
-            <div class="col-lg-6">
+            <?php
+                include('./admin/db.php');
+                $std = $dsn->prepare("SELECT * FROM `meetings`" );
+                $std->execute();
+                $data = $std->fetchAll();
+                $i = 0; 
+                foreach($data as $row){
+                  if($i >= 4) {break;}else{
+                  
+            ?>
+                  <div class="col-lg-6">
+             
               <div class="meeting-item">
                 <div class="thumb">
                   <div class="price">
-                    <span>$22.00</span>
+                    <span>$<?php echo "{$row['price']}"?></span>
                   </div>
-                  <a href="meeting-details.html"><img src="assets/images/meeting-01.jpg" alt="New Lecturer Meeting"></a>
+                  <?php if(!isset($_SESSION['user_name'])): ?>
+                   <a href="./login_std.php"><img src="admin/uploaded_images/<?php echo "{$row['image']}"?>" alt="New Lecturer Meeting"/></a>
+                  <?php else: ?>
+                    <?php echo "<a href='./meeting-details.php?id={$row['meeting_id']}'>"?><img src="admin/uploaded_images/<?php echo "{$row['image']}"?>" alt="New Lecturer Meeting"/></a>
+                  <?php endif;?> 
+                 
                 </div>
                 <div class="down-content">
                   <div class="date">
-                    <h6>Nov <span>10</span></h6>
+                       <?php $date = date_create("{$row['meeting_date']}");?>
+                    <h6><?php echo date_format($date,"M")?> <span><?php echo date_format($date,"d")?></span></h6>
                   </div>
-                  <a href="meeting-details.html"><h4>New Lecturers Meeting</h4></a>
-                  <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
+                  <?php if(!isset($_SESSION['user_name'])): ?>
+                    <a href="./login_std.php"><h4><?php echo "{$row['title']}"?></h4></a>
+                  <?php else: ?>
+                    <?php echo "<a href='./meeting-details.php?id={$row['meeting_id']}'>"?><h4><?php echo "{$row['title']}"?></h4></a>
+                  <?php endif;?>
+                  <p><?php echo "{$row['description']}"?><br></p>
+                  
                 </div>
+               
               </div>
-            </div>
-            <div class="col-lg-6">
+                  </div>
+             <?php $i++; }?>
+            <?php } ?>
+           
+            <!-- <div class="col-lg-6">
               <div class="meeting-item">
                 <div class="thumb">
                   <div class="price">
                     <span>$36.00</span>
                   </div>
-                  <a href="meeting-details.html"><img src="assets/images/meeting-02.jpg" alt="Online Teaching"></a>
+                  <?php if(!isset($_SESSION['user_name'])): ?>
+                    <a href="./login_std.php"><img src="assets/images/meeting-02.jpg" alt="Online Teaching"></a>
+                  <?php else: ?>
+                    <a href="meeting-details.php"><img src="assets/images/meeting-02.jpg" alt="Online Teaching"></a>
+                  <?php endif;?>
                 </div>
                 <div class="down-content">
                   <div class="date">
                     <h6>Nov <span>24</span></h6>
                   </div>
-                  <a href="meeting-details.html"><h4>Online Teaching Techniques</h4></a>
+                  <?php if(!isset($_SESSION['user_name'])): ?>
+                    <a href="./login_std.php"><h4>Online Teaching Techniques</h4></a>
+                  <?php else: ?>
+                    <a href="meeting-details.php"><h4>Online Teaching Techniques</h4></a>
+                  <?php endif;?>
                   <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
                 </div>
               </div>
@@ -243,13 +305,21 @@ https://templatemo.com/tm-569-edu-meeting
                   <div class="price">
                     <span>$14.00</span>
                   </div>
-                  <a href="meeting-details.html"><img src="assets/images/meeting-03.jpg" alt="Higher Education"></a>
+                  <?php if(!isset($_SESSION['user_name'])): ?>
+                    <a href="./login_std.php"><img src="assets/images/meeting-03.jpg" alt="Higher Education"></a>
+                  <?php else: ?>
+                    <a href="meeting-details.php"><img src="assets/images/meeting-03.jpg" alt="Higher Education"></a>
+                  <?php endif;?>
                 </div>
                 <div class="down-content">
                   <div class="date">
                     <h6>Nov <span>26</span></h6>
                   </div>
-                  <a href="meeting-details.html"><h4>Higher Education Conference</h4></a>
+                  <?php if(!isset($_SESSION['user_name'])): ?>
+                   <a href="./login_std.php"><h4>Higher Education Conference</h4></a>
+                  <?php else: ?>
+                   <a href="meeting-details.php"><h4>Higher Education Conference</h4></a>
+                  <?php endif;?>
                   <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
                 </div>
               </div>
@@ -260,23 +330,35 @@ https://templatemo.com/tm-569-edu-meeting
                   <div class="price">
                     <span>$48.00</span>
                   </div>
-                  <a href="meeting-details.html"><img src="assets/images/meeting-04.jpg" alt="Student Training"></a>
+                  <?php if(!isset($_SESSION['user_name'])): ?>
+                    <a href="./login_std.php"><img src="assets/images/meeting-04.jpg" alt="Student Training"></a>
+                  <?php else: ?>
+                    <a href="meeting-details.php"><img src="assets/images/meeting-04.jpg" alt="Student Training"></a>
+                  <?php endif;?>
                 </div>
                 <div class="down-content">
                   <div class="date">
                     <h6>Nov <span>30</span></h6>
                   </div>
-                  <a href="meeting-details.html"><h4>Student Training Meetup</h4></a>
+                  <?php if(!isset($_SESSION['user_name'])): ?>
+                  <a href="./login_std.php"><h4>Student Training Meetup</h4></a>
+                  <?php else: ?>
+                    <a href="meeting-details.php"><h4>Student Training Meetup</h4></a>
+                  <?php endif;?>
                   <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
+          
         </div>
+       
+      
+         
       </div>
     </div>
   </section>
-
+<?php if(!isset($_SESSION['user_name'])): ?>
   <section class="apply-now" id="apply">
     <div class="container">
       <div class="row">
@@ -287,7 +369,7 @@ https://templatemo.com/tm-569-edu-meeting
                 <h3>APPLY FOR BACHELOR DEGREE</h3>
                 <p>You are allowed to use this edu meeting CSS template for your school or university or business. You can feel free to modify or edit this layout.</p>
                 <div class="main-button-red">
-                  <div class="scroll-to-section"><a href="#contact">Join Us Now!</a></div>
+                  <div ><a href="./login_std.php">Join Us Now!</a></div>
               </div>
               </div>
             </div>
@@ -296,7 +378,7 @@ https://templatemo.com/tm-569-edu-meeting
                 <h3>APPLY FOR BACHELOR DEGREE</h3>
                 <p>You are not allowed to redistribute the template ZIP file on any other template website. Please contact us for more information.</p>
                 <div class="main-button-yellow">
-                  <div class="scroll-to-section"><a href="#contact">Join Us Now!</a></div>
+                  <div><a href="./login_std.php">Join Us Now!</a></div>
               </div>
               </div>
             </div>
@@ -364,6 +446,7 @@ https://templatemo.com/tm-569-edu-meeting
       </div>
     </div>
   </section>
+<?php endif;?>
 
   <section class="our-courses" id="courses">
     <div class="container">
@@ -759,8 +842,11 @@ https://templatemo.com/tm-569-edu-meeting
       </div>
     </div>
     <div class="footer">
-      <p>Copyright © 2022 Edu Meeting Co., Ltd. All Rights Reserved. 
-          <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a></p>
+      <p>Copyright © 2022 Edu Meeting Co., Ltd. All Rights Reserved.
+          <?php if(!isset($_SESSION['user_name']) && !isset($_SESSION['admin_name']) ): ?> 
+          <br><a href="admin/login.php" target="_parent" title="free css templates">Login as Admin</a></p>
+          <?php endif;?>
+
     </div>
   </section>
 

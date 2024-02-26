@@ -63,24 +63,24 @@ https://templatemo.com/tm-569-edu-meeting
               <div class="col-12">
                   <nav class="main-nav">
                       <!-- ***** Logo Start ***** -->
-                      <a href="index.html" class="logo">
+                      <a href="index.php" class="logo">
                           Edu Meeting
                       </a>
                       <!-- ***** Logo End ***** -->
                       <!-- ***** Menu Start ***** -->
                       <ul class="nav">
-                          <li><a href="index.html">Home</a></li>
-                          <li><a href="meetings.html" class="active">Meetings</a></li>
-                          <li><a href="index.html">Apply Now</a></li>
+                          <li><a href="index.php">Home</a></li>
+                          <li><a href="meetings.php" class="active">Meetings</a></li>
                           <li class="has-sub">
                               <a href="javascript:void(0)">Pages</a>
                               <ul class="sub-menu">
-                                  <li><a href="meetings.html">Upcoming Meetings</a></li>
-                                  <li><a href="meeting-details.html">Meeting Details</a></li>
+                                  <li><a href="meetings.php">Upcoming Meetings</a></li>
+                                  <li><a href="meeting-details.php">Meeting Details</a></li>
                               </ul>
                           </li>
-                          <li><a href="index.html">Courses</a></li> 
-                          <li><a href="index.html">Contact Us</a></li> 
+                          <li><a href="index.php">Courses</a></li> 
+                          <li><a href="index.php">Contact Us</a></li> 
+                          <li ><a href="./logout.php">Log out</a></li> 
                       </ul>        
                       <a class='menu-trigger'>
                           <span>Menu</span>
@@ -119,163 +119,176 @@ https://templatemo.com/tm-569-edu-meeting
                 </ul>
               </div>
             </div>
+            
             <div class="col-lg-12">
               <div class="row grid">
-                <div class="col-lg-4 templatemo-item-col all soon">
+                 <?php
+                    include('./admin/db.php');
+                    $std = $dsn->prepare("SELECT * FROM `meetings`" );
+                    $std->execute();
+                    $data = $std->fetchAll();
+                    foreach($data as $row){ 
+                 ?>
+                 <div class="col-lg-4 templatemo-item-col all soon ">
                   <div class="meeting-item">
                     <div class="thumb">
                       <div class="price">
-                        <span>$14.00</span>
+                        <span>$<?php echo "{$row['price']}"?></span>
                       </div>
-                      <a href="meeting-details.html"><img src="assets/images/meeting-01.jpg" alt=""></a>
+                      <?php echo "<a href='./meeting-details.php?id={$row['meeting_id']}'>"?><img src="admin/uploaded_images/<?php echo "{$row['image']}"?>" alt=""/></a>
                     </div>
                     <div class="down-content">
                       <div class="date">
-                        <h6>Nov <span>12</span></h6>
+                        <?php $date = date_create("{$row['meeting_date']}");?>
+                        <h6> <?php echo date_format($date,"M")?> <span><?php echo date_format($date,"d")?></span></h6>
                       </div>
-                      <a href="meeting-details.html"><h4>New Lecturers Meeting</h4></a>
-                      <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
+                      <?php echo "<a href='./meeting-details.php?id={$row['meeting_id']}'>"?><h4><?php echo "{$row['title']}"?></h4></a>
+                      <p><?php echo "{$row['description']}"?><br></p>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-4 templatemo-item-col all imp">
+                 </div>
+               
+                 <!-- <div class="col-lg-4 templatemo-item-col all imp">
                   <div class="meeting-item">
                     <div class="thumb">
                       <div class="price">
                         <span>$22.00</span>
                       </div>
-                      <a href="meeting-details.html"><img src="assets/images/meeting-02.jpg" alt=""></a>
+                      <a href="meeting-details.php"><img src="assets/images/meeting-02.jpg" alt=""></a>
                     </div>
                     <div class="down-content">
                       <div class="date">
                         <h6>Nov <span>14</span></h6>
                       </div>
-                      <a href="meeting-details.html"><h4>Online Teaching Techniques</h4></a>
+                      <a href="meeting-details.php"><h4>Online Teaching Techniques</h4></a>
                       <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-4 templatemo-item-col all soon">
+                 </div> -->
+                 <!-- <div class="col-lg-4 templatemo-item-col all soon">
                   <div class="meeting-item">
                     <div class="thumb">
                       <div class="price">
                         <span>$24.00</span>
                       </div>
-                      <a href="meeting-details.html"><img src="assets/images/meeting-03.jpg" alt=""></a>
+                      <a href="meeting-details.php"><img src="assets/images/meeting-03.jpg" alt=""></a>
                     </div>
                     <div class="down-content">
                       <div class="date">
                         <h6>Nov <span>16</span></h6>
                       </div>
-                      <a href="meeting-details.html"><h4>Network Teaching Concept</h4></a>
+                      <a href="meeting-details.php"><h4>Network Teaching Concept</h4></a>
                       <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-4 templatemo-item-col all att">
+                 </div>
+                 <div class="col-lg-4 templatemo-item-col all att">
                   <div class="meeting-item">
                     <div class="thumb">
                       <div class="price">
                         <span>$32.00</span>
                       </div>
-                      <a href="meeting-details.html"><img src="assets/images/meeting-04.jpg" alt=""></a>
+                      <a href="meeting-details.php"><img src="assets/images/meeting-04.jpg" alt=""></a>
                     </div>
                     <div class="down-content">
                       <div class="date">
                         <h6>Nov <span>18</span></h6>
                       </div>
-                      <a href="meeting-details.html"><h4>Online Teaching Tools</h4></a>
+                      <a href="meeting-details.php"><h4>Online Teaching Tools</h4></a>
                       <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-4 templatemo-item-col all att">
+                 </div>
+                 <div class="col-lg-4 templatemo-item-col all att">
                   <div class="meeting-item">
                     <div class="thumb">
                       <div class="price">
                         <span>$34.00</span>
                       </div>
-                      <a href="meeting-details.html"><img src="assets/images/meeting-02.jpg" alt=""></a>
+                      <a href="meeting-details.php"><img src="assets/images/meeting-02.jpg" alt=""></a>
                     </div>
                     <div class="down-content">
                       <div class="date">
                         <h6>Nov <span>22</span></h6>
                       </div>
-                      <a href="meeting-details.html"><h4>New Teaching Techniques</h4></a>
+                      <a href="meeting-details.php"><h4>New Teaching Techniques</h4></a>
                       <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-4 templatemo-item-col all imp">
+                 </div>
+                 <div class="col-lg-4 templatemo-item-col all imp">
                   <div class="meeting-item">
                     <div class="thumb">
                       <div class="price">
                         <span>$45.00</span>
                       </div>
-                      <a href="meeting-details.html"><img src="assets/images/meeting-03.jpg" alt=""></a>
+                      <a href="meeting-details.php"><img src="assets/images/meeting-03.jpg" alt=""></a>
                     </div>
                     <div class="down-content">
                       <div class="date">
                         <h6>Nov <span>24</span></h6>
                       </div>
-                      <a href="meeting-details.html"><h4>Technology Conference</h4></a>
+                      <a href="meeting-details.php"><h4>Technology Conference</h4></a>
                       <p>TemplateMo is the best website<br>when it comes to Free CSS.</p>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-4 templatemo-item-col all imp att">
+                 </div>
+                 <div class="col-lg-4 templatemo-item-col all imp att">
                   <div class="meeting-item">
                     <div class="thumb">
                       <div class="price">
                         <span>$52.00</span>
                       </div>
-                      <a href="meeting-details.html"><img src="assets/images/meeting-01.jpg" alt=""></a>
+                      <a href="meeting-details.php"><img src="assets/images/meeting-01.jpg" alt=""></a>
                     </div>
                     <div class="down-content">
                       <div class="date">
                         <h6>Nov <span>27</span></h6>
                       </div>
-                      <a href="meeting-details.html"><h4>Online Teaching Techniques</h4></a>
+                      <a href="meeting-details.php"><h4>Online Teaching Techniques</h4></a>
                       <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-4 templatemo-item-col all soon imp">
+                 </div>
+                 <div class="col-lg-4 templatemo-item-col all soon imp">
                   <div class="meeting-item">
                     <div class="thumb">
                       <div class="price">
                         <span>$64.00</span>
                       </div>
-                      <a href="meeting-details.html"><img src="assets/images/meeting-02.jpg" alt=""></a>
+                      <a href="meeting-details.php"><img src="assets/images/meeting-02.jpg" alt=""></a>
                     </div>
                     <div class="down-content">
                       <div class="date">
                         <h6>Nov <span>28</span></h6>
                       </div>
-                      <a href="meeting-details.html"><h4>Instant Lecture Design</h4></a>
+                      <a href="meeting-details.php"><h4>Instant Lecture Design</h4></a>
                       <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-4 templatemo-item-col all att soon">
-                  <div class="meeting-item">
+                 </div>
+                 <div class="col-lg-4 templatemo-item-col all att soon"> -->
+                  <!-- <div class="meeting-item">
                     <div class="thumb">
                       <div class="price">
                         <span>$74.00</span>
                       </div>
-                      <a href="meeting-details.html"><img src="assets/images/meeting-03.jpg" alt=""></a>
+                      <a href="meeting-details.php"><img src="assets/images/meeting-03.jpg" alt=""></a>
                     </div>
                     <div class="down-content">
                       <div class="date">
                         <h6>Nov <span>30</span></h6>
                       </div>
-                      <a href="meeting-details.html"><h4>Online Social Networking</h4></a>
+                      <a href="meeting-details.php"><h4>Online Social Networking</h4></a>
                       <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
                     </div>
-                  </div>
-                </div>
+                  </div> -->
+                <!-- </div> -->
+                <?php } ?>  
               </div>
             </div>
+
+
             <div class="col-lg-12">
               <div class="pagination">
                 <ul>

@@ -1,3 +1,5 @@
+<?php session_start();  ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,28 +65,29 @@ https://templatemo.com/tm-569-edu-meeting
               <div class="col-12">
                   <nav class="main-nav">
                       <!-- ***** Logo Start ***** -->
-                      <a href="index.html" class="logo">
+                      <a href="index.php" class="logo">
                           Edu Meeting
                       </a>
                       <!-- ***** Logo End ***** -->
                       <!-- ***** Menu Start ***** -->
                       <ul class="nav">
-                          <li><a href="index.html">Home</a></li>
-                          <li><a href="meetings.html" class="active">Meetings</a></li>
-                          <li><a href="index.html">Apply Now</a></li>
+                          <li><a href="index.php">Home</a></li>
+                          <li><a href="meetings.php" class="active">Meetings</a></li>
                           <li class="has-sub">
                               <a href="javascript:void(0)">Pages</a>
                               <ul class="sub-menu">
-                                  <li><a href="meetings.html">Upcoming Meetings</a></li>
-                                  <li><a href="meeting-details.html">Meeting Details</a></li>
+                                  <li><a href="meetings.php">Upcoming Meetings</a></li>
+                                  <li><a href="meeting-details.php">Meeting Details</a></li>
                               </ul>
                           </li>
-                          <li><a href="index.html">Courses</a></li> 
-                          <li><a href="index.html">Contact Us</a></li> 
+                          <li><a href="index.php">Courses</a></li> 
+                          <li><a href="index.php">Contact Us</a></li> 
+                          <li ><a href="./logout.php">Log out</a></li>  
                       </ul>        
                       <a class='menu-trigger'>
                           <span>Menu</span>
                       </a>
+                     
                       <!-- ***** Menu End ***** -->
                   </nav>
               </div>
@@ -111,22 +114,32 @@ https://templatemo.com/tm-569-edu-meeting
           <div class="row">
             <div class="col-lg-12">
               <div class="meeting-single-item">
-                <div class="thumb">
+               <?php
+                 include("./admin/db.php");
+                 $id = $_GET['id'];
+                 if(!isset($id) or !is_numeric($id)){
+                  header("location:./meetings.php");
+                  }
+                 $sql = $dsn->prepare("SELECT * FROM `meetings` WHERE meeting_id='$id'");
+                 $sql->execute();
+                 $data = $sql->fetchAll();
+                 foreach($data as $row){ 
+                 ?>
+                  <div class="thumb">
                   <div class="price">
-                    <span>$14.00</span>
+                    <span>$<?php echo "{$row['price']}"?></span>
                   </div>
                   <div class="date">
-                    <h6>Nov <span>12</span></h6>
+                    <?php $date = date_create("{$row['meeting_date']}");?>
+                    <h6><?php echo date_format($date,"M")?> <span><?php echo date_format($date,"d")?></span></h6>
                   </div>
-                  <a href="meeting-details.html"><img src="assets/images/single-meeting.jpg" alt=""></a>
-                </div>
-                <div class="down-content">
-                  <a href="meeting-details.html"><h4>Online Teaching and Learning Tools</h4></a>
-                  <p>Recreio dos Bandeirantes, Rio de Janeiro - RJ, 22795-008, Brazil</p>
+                  <a href="meeting-details.php"><img src="admin/uploaded_images/<?php echo "{$row['image']}"?>" alt=""></a>
+                  </div>
+                  <div class="down-content">
+                  <a href="meeting-details.php"><h4><?php echo "{$row['title']}"?></h4></a>
+                  <p><b>Instructor: </b><?php echo "{$row['instructor_name']}"?></p>
                   <p class="description">
-                    This is an edu meeting HTML CSS template provided by <a href="https://templatemo.com/" target="_blank" rel="nofollow">TemplateMo website</a>. This is a Bootstrap v5.1.3 layout. If you need more free website templates like this one, please visit our website TemplateMo. Please tell your friends about our website. Thank you. If you want to get the latest collection of HTML CSS templates for your websites, you may visit <a rel="nofollow" href="https://www.toocss.com/" target="_blank">Too CSS website</a>. If you need a working contact form script, please visit <a href="https://templatemo.com/contact" target="_parent">our contact page</a> for more info.
-                    
-                    <br><br>You are allowed to use this edu meeting CSS template for your school or university or business. You can feel free to modify or edit this layout. You are not allowed to redistribute the template ZIP file on any other template website. Please contact us for more information.
+                   <?php echo "{$row['content']}"?>
                   </p>
                   <div class="row">
                     <div class="col-lg-4">
@@ -138,8 +151,7 @@ https://templatemo.com/tm-569-edu-meeting
                     <div class="col-lg-4">
                       <div class="location">
                         <h5>Location</h5>
-                        <p>Recreio dos Bandeirantes, 
-                        <br>Rio de Janeiro - RJ, 22795-008, Brazil</p>
+                        <p><?php echo "{$row['locatin']}"?></p>
                       </div>
                     </div>
                     <div class="col-lg-4">
@@ -148,6 +160,7 @@ https://templatemo.com/tm-569-edu-meeting
                         <p>010-020-0340<br>090-080-0760</p>
                       </div>
                     </div>
+                    
                     <div class="col-lg-12">
                       <div class="share">
                         <h5>Share:</h5>
@@ -160,12 +173,14 @@ https://templatemo.com/tm-569-edu-meeting
                       </div>
                     </div>
                   </div>
-                </div>
+                  </div>
+                 <?php }?>
               </div>
+
             </div>
             <div class="col-lg-12">
               <div class="main-button-red">
-                <a href="meetings.html">Back To Meetings List</a>
+                <a href="meetings.php">Back To Meetings List</a>
               </div>
             </div>
           </div>

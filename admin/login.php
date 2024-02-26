@@ -1,3 +1,7 @@
+<?php
+   session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,6 +12,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Education Admin | Login/Register</title>
+    <!-- for alerts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <!-- Bootstrap -->
     <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -26,20 +36,20 @@
     <div>
       <a class="hiddenanchor" id="signup"></a>
       <a class="hiddenanchor" id="signin"></a>
-
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form>
+            <form action="adminLog/signin.php" method="POST">
               <h1>Login Form</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
+                <input type="text" class="form-control" name="admin_name" placeholder="Username" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input type="password" class="form-control" name="password" placeholder="Password" required="" />
               </div>
               <div>
-                <a class="btn btn-default submit" href="index.html">Log in</a>
+                <button name="signin" class="btn btn-default submit">Log in</button>
+                <!-- <a class="btn btn-default submit" name="signin" href="../index.php">Log in</a> -->
                 <a class="reset_pass" href="#">Lost your password?</a>
               </div>
 
@@ -64,22 +74,25 @@
 
         <div id="register" class="animate form registration_form">
           <section class="login_content">
-            <form>
+            <form action="adminLog/signup.php" method="POST">
               <h1>Create Account</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Fullname" required="" />
+                <input type="text" class="form-control" name="fullname" placeholder="Fullname" required="" />
               </div>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
+                <input type="text" class="form-control" name="admin_name" placeholder="Username" required="" />
               </div>
               <div>
-                <input type="email" class="form-control" placeholder="Email" required="" />
+                <input type="email" class="form-control" name="email" placeholder="Email" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input type="password" class="form-control" name="password" placeholder="Password" required="" />
               </div>
-              <div>
-                <a class="btn btn-default submit" href="index.html">Submit</a>
+              <div >
+                <button name="signup" class="btn btn-default submit">Submit</button>
+                <!-- <input type="submit" name="signup" value="Submit"/> -->
+                <!-- <a class="btn btn-default submit" name="signup" href="../index.php" >Submit</a> -->
+                
               </div>
 
               <div class="clearfix"></div>

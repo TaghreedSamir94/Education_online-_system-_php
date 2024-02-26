@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("./db.php");
 if(isset($_POST['update'])){
     $name = $_POST['editcategory'];
@@ -71,7 +72,7 @@ if(isset($_POST['update'])){
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2><?php echo $_SESSION['admin_name'] ?></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -118,7 +119,7 @@ if(isset($_POST['update'])){
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.php">
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="./adminLog/logout.php">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>
@@ -136,7 +137,7 @@ if(isset($_POST['update'])){
                 <ul class=" navbar-right">
                   <li class="nav-item dropdown open" style="padding-left: 15px;">
                     <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                      <img src="images/img.jpg" alt="">John Doe
+                      <img src="images/img.jpg" alt=""><?php echo $_SESSION['admin_name'] ?>
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item"  href="javascript:;"> Profile</a>
@@ -145,7 +146,7 @@ if(isset($_POST['update'])){
                           <span>Settings</span>
                         </a>
                     <a class="dropdown-item"  href="javascript:;">Help</a>
-                      <a class="dropdown-item"  href="login.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                      <a class="dropdown-item"  href="./adminLog/logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                     </div>
                   </li>
   

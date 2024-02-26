@@ -1,21 +1,28 @@
 <?php
+session_start();
 include("./db.php");
 if(isset($_POST['update'])){
   $date = $_POST['date'];
 	$title = $_POST['title'];
 	$ins_name = $_POST['ins_name'];
+  $desc = $_POST['description'];
 	$content = $_POST['content'];
 	$location = $_POST['location'];
 	$price = $_POST['price'];
 	$active = $_POST['active'];
-	$image = $_POST['image'];
+	// $image = $_POST['image'];
 	$category = $_POST['category'];
   $id = $_POST['id'];
+  $image = $_FILES['image'];
+	$image_name = $_FILES['image']['name'];
+	$tempname = $_FILES['image']['tmp_name'];
+	$destination = "uploaded_images/".$image_name;
     
     if(!empty($date) && !empty($title) && !empty($ins_name) && !empty($content) && !empty($location) && !empty($price) && !empty($image) && !empty($category)  or !empty($active) ) {
         $query= "UPDATE `meetings` SET `title`='$title',`locatin`='$location',`instructor_name`='$ins_name',
-        `meeting_date`='$date',`price`='$price',`content`='$content',`image`='$image',`active`='$active',
+        `meeting_date`='$date',`price`='$price',`description`='$desc',`content`='$content',`image`='$image_name',`active`='$active',
         `category_id`='$category' WHERE `meeting_id`='$id'";
+        move_uploaded_file($tempname, $destination);
         $stmt = $dsn->prepare($query);
         $stmt->execute();
 
@@ -81,7 +88,7 @@ if(isset($_POST['update'])){
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2><?php echo $_SESSION['admin_name'] ?></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -128,7 +135,7 @@ if(isset($_POST['update'])){
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.php">
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="./adminLog/logout.php">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>
@@ -146,7 +153,7 @@ if(isset($_POST['update'])){
                 <ul class=" navbar-right">
                   <li class="nav-item dropdown open" style="padding-left: 15px;">
                     <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                      <img src="images/img.jpg" alt="">John Doe
+                      <img src="images/img.jpg" alt=""><?php echo $_SESSION['admin_name'] ?>
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item"  href="javascript:;"> Profile</a>
@@ -155,7 +162,7 @@ if(isset($_POST['update'])){
                           <span>Settings</span>
                         </a>
                     <a class="dropdown-item"  href="javascript:;">Help</a>
-                      <a class="dropdown-item"  href="login.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                      <a class="dropdown-item"  href="./adminLog/logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                     </div>
                   </li>
   

@@ -1,3 +1,13 @@
+<?php 
+session_start();  
+include("./db.php");
+$q="SELECT * FROM `users`";
+$sql=$dsn->prepare($q);
+$sql->execute();
+
+$data=$sql->fetchAll();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -48,7 +58,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2><?php echo $_SESSION['admin_name'] ?></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -95,7 +105,7 @@
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.php">
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="./adminLog/logout.php">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>
@@ -113,7 +123,7 @@
                 <ul class=" navbar-right">
                   <li class="nav-item dropdown open" style="padding-left: 15px;">
                     <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                      <img src="images/img.jpg" alt="">John Doe
+                      <img src="images/img.jpg" alt=""><?php echo $_SESSION['admin_name'] ?>
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item"  href="javascript:;"> Profile</a>
@@ -122,7 +132,7 @@
                           <span>Settings</span>
                         </a>
                     <a class="dropdown-item"  href="javascript:;">Help</a>
-                      <a class="dropdown-item"  href="login.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                      <a class="dropdown-item"  href="./adminLog/logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                     </div>
                   </li>
   
@@ -250,93 +260,28 @@
                           <th>Username</th>
                           <th>Email</th>
                           <th>Active</th>
+                          <th>Users Type</th>
                           <th>Edit</th>
+                          
                         </tr>
                       </thead>
 
 
                       <tbody>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><a href="./edituser.php"><img src="./images/edit.png" alt="Edit"></a></td>
-                        </tr>
-                        
+                      <?php
+                        foreach($data as $row){
+                          echo "
+                          <tr>
+                           <td>{$row['date']}</td>
+                           <td>{$row['full_name']}</td>
+                           <td>{$row['user_name']}</td>
+                           <td>{$row['email']}</td>
+                           <td>{$row['active']}</td>
+                           <td>{$row['users_type']}</td>
+                           <td><a href='./edituser.php?id={$row['user_id']}'><img src='./images/edit.png' alt='Edit'></a></td>
+                          </tr>";}
+                        ?>
+      
                       </tbody>
                     </table>
                   </div>

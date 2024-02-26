@@ -1,3 +1,28 @@
+<?php
+session_start();
+include('./db.php');
+$id=$_GET['id'];
+//for check the id which is returned is numeric and not null
+if(!isset($id) or !is_numeric($id)){
+	header("location:./users.php");
+}
+//for check the id which is returned is in DB
+$q="SELECT `user_id` FROM `users` WHERE `user_id`='$id' ";
+$res= $dsn->query($q);
+$count = $res->fetchColumn();
+if(!$count) {
+	header("location:./users.php");
+}
+//for the name of the category to be viewed in the input form, the code is completed on line 273
+$sql=$dsn->prepare("SELECT * FROM `users` WHERE `user_id`='$id'");
+$sql->execute();
+$data=$sql->fetchAll();
+
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -38,7 +63,7 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><i class="fa fa-graduation-cap"></i> <span>Education Admin</span></a>
+						<a href="../index.php" class="site_title"><i class="fa fa-graduation-cap"></i> <span>Education Admin</span></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -50,7 +75,7 @@
 						</div>
 						<div class="profile_info">
 							<span>Welcome,</span>
-							<h2>John Doe</h2>
+							<h2><?php echo $_SESSION['admin_name'] ?></h2>
 						</div>
 					</div>
 					<!-- /menu profile quick info -->
@@ -64,20 +89,20 @@
 							<ul class="nav side-menu">
 								<li><a><i class="fa fa-users"></i> Users <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="users.html">Users List</a></li>
-										<li><a href="addUser.html">Add User</a></li>
+										<li><a href="users.php">Users List</a></li>
+										<li><a href="addUser.php">Add User</a></li>
 									</ul>
 								</li>
 								<li><a><i class="fa fa-edit"></i> Categories <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="addCategory.html">Add Category</a></li>
-										<li><a href="categories.html">Categories List</a></li>
+										<li><a href="addCategory.php">Add Category</a></li>
+										<li><a href="categories.php">Categories List</a></li>
 									</ul>
 								</li>
 								<li><a><i class="fa fa-desktop"></i> Meetings <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="addMeeting.html">Add Meeting</a></li>
-										<li><a href="meetings.html">Meetings List</a></li>
+										<li><a href="addMeeting.php">Add Meeting</a></li>
+										<li><a href="meetings.php">Meetings List</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -97,7 +122,7 @@
 						<a data-toggle="tooltip" data-placement="top" title="Lock">
 							<span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
 						</a>
-						<a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+						<a data-toggle="tooltip" data-placement="top" title="Logout" href="./adminLog/logout.php">
 							<span class="glyphicon glyphicon-off" aria-hidden="true"></span>
 						</a>
 					</div>
@@ -115,7 +140,7 @@
 						<ul class=" navbar-right">
 							<li class="nav-item dropdown open" style="padding-left: 15px;">
 								<a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-									<img src="images/img.jpg" alt="">John Doe
+									<img src="images/img.jpg" alt=""><?php echo $_SESSION['admin_name'] ?>
 								</a>
 								<div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
 									<a class="dropdown-item" href="javascript:;"> Profile</a>
@@ -124,7 +149,7 @@
 										<span>Settings</span>
 									</a>
 									<a class="dropdown-item" href="javascript:;">Help</a>
-									<a class="dropdown-item" href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+									<a class="dropdown-item" href="./adminLog/logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
 								</div>
 							</li>
 
@@ -242,33 +267,34 @@
 								</div>
 								<div class="x_content">
 									<br />
-									<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+									<form method="POST" action="./updateuser.php" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
 										<div class="item form-group">
 											<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Full Name <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="first-name" required="required" class="form-control ">
+												<input type="text" id="first-name" name="fullname" required="required" class="form-control " value="<?php foreach($data as $row){echo "{$row['full_name']}";} ?>">
 											</div>
 										</div>
 										<div class="item form-group">
 											<label class="col-form-label col-md-3 col-sm-3 label-align" for="user-name">Username <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="user-name" name="user-name" required="required" class="form-control">
+												<input type="text" id="user-name" name="user_name" required="required" class="form-control" value="<?php foreach($data as $row){echo "{$row['user_name']}";} ?>">
+												<input type="hidden" value="<?php echo $id;?>" name="id">
 											</div>
 										</div>
 										<div class="item form-group">
 											<label for="email" class="col-form-label col-md-3 col-sm-3 label-align">Email <span class="required">*</span></label>
 											<div class="col-md-6 col-sm-6 ">
-												<input id="email" class="form-control" type="email" name="email" required="required">
+												<input id="email" class="form-control" type="email" name="email" required="required" value="<?php foreach($data as $row){echo "{$row['email']}";} ?>">
 											</div>
 										</div>
 										<div class="item form-group">
 											<label class="col-form-label col-md-3 col-sm-3 label-align">Active</label>
 											<div class="checkbox">
 												<label>
-													<input type="checkbox" class="flat">
+													<input type="checkbox" class="flat" name="active" value="1">
 												</label>
 											</div>
 										</div>
@@ -282,8 +308,8 @@
 										<div class="ln_solid"></div>
 										<div class="item form-group">
 											<div class="col-md-6 col-sm-6 offset-md-3">
-												<button class="btn btn-primary" type="button">Cancel</button>
-												<button type="submit" class="btn btn-success">Update</button>
+												<a href="./users.php"><button class="btn btn-primary" type="button">Cancel</button></a>
+												<button type="submit" class="btn btn-success" name="update">Update</button>
 											</div>
 										</div>
 
