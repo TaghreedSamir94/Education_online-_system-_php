@@ -11,7 +11,7 @@ if(isset($_POST['add'])){
 
         if($stmt){
             $success = " New Category added successfully";
-            header("refresh:3;url=categories.php");
+            header("refresh:2;url=categories.php");
         }
 
     }

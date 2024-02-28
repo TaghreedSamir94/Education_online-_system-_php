@@ -18,7 +18,7 @@ $sql2 = $dsn->prepare("DELETE FROM `meetings` WHERE meeting_id='$id'");
 $sql2->execute();
 if($sql2){
     $success = "Meeting has been deleted successfully";
-    header("refresh:3;url=meetings.php");
+    header("refresh:2;url=meetings.php");
 }
 
 

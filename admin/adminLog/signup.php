@@ -1,6 +1,6 @@
 <?php
-include('../db.php');
 session_start();
+include('../db.php');
 // $msg= "";
 if(isset($_POST['signup'])){
     $full_name = $_POST['fullname'];
@@ -12,13 +12,12 @@ if(isset($_POST['signup'])){
         VALUES ('$full_name','$name','$email','$pass')";
         $stat=$dsn->prepare($sql);
         $stat->execute();
-
-        $_SESSION['success'] = "Registration completed successfully";
+        $_SESSION['success'] = "Registration completed successfully, you can Login Now";
 
     }
 }
 // header("Location:../users.php");
-header("refresh:3;url=../users.php");
+header("refresh:3;url=../login.php");
 
 
 ?>

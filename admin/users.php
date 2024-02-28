@@ -4,7 +4,6 @@ include("./db.php");
 $q="SELECT * FROM `users`";
 $sql=$dsn->prepare($q);
 $sql->execute();
-
 $data=$sql->fetchAll();
 ?>
 
@@ -58,7 +57,7 @@ $data=$sql->fetchAll();
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2><?php echo $_SESSION['admin_name'] ?></h2>
+                <h2><?php echo $_SESSION['full_name'] ?></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->

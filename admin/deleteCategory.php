@@ -18,7 +18,7 @@ $sql2 = $dsn->prepare("DELETE FROM `categories` WHERE category_id='$id'");
 $sql2->execute();
 if($sql2){
     $success = "Category have been deleted successfully";
-    header("refresh:4;url=categories.php");
+    header("refresh:2;url=categories.php");
 }
 
 

@@ -12,7 +12,7 @@ if(isset($_POST['update'])){
 
         if($stmt){
             $success = "Category Name Updated successfully";
-            header("refresh:4;url=categories.php");
+            header("refresh:3;url=categories.php");
         }
 
     }

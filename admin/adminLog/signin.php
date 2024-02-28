@@ -1,6 +1,6 @@
 <?php
-include('../db.php');
 session_start();
+include('../db.php');
 if(isset($_POST['signin'])){
     $name = $_POST['admin_name'];
     $pass =  $_POST['password'];
