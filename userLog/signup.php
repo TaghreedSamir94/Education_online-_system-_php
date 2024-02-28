@@ -15,12 +15,12 @@ if(isset($_POST['signup'])){
         $stat=$dsn->prepare($sql);
         $stat->execute();
 
-        $_SESSION['success'] = "Registration completed successfully";
+        $_SESSION['success'] = "Registration completed successfully,You can login now";
 
     }
 }
 // header("Location:../index.php");
-header("refresh:3;url=../index.php");
+header("refresh:3;url=./signin.php");
 
 
 ?>
